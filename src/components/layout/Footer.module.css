@@ -1,0 +1,144 @@
+/* Reference Style Footer */
+.footer {
+    background-color: #050505;
+    padding: 6rem 0 2rem;
+    color: #ffffff;
+    font-size: 0.95rem;
+}
+
+.container {
+    max-width: var(--container-width);
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1.2fr 1.3fr;
+    gap: 4rem;
+    margin-bottom: 4rem;
+    align-items: start;
+}
+
+/* Brand Column */
+.brand {
+    display: flex;
+    flex-direction: column;
+}
+
+.logo {
+    color: var(--primary);
+    /* Gold */
+    font-family: "Cinzel", serif;
+    font-size: 2.2rem;
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.02em;
+    font-weight: 500;
+}
+
+.tagline {
+    color: #888;
+    line-height: 1.6;
+    margin-bottom: 2.5rem;
+    max-width: 300px;
+    font-size: 1rem;
+}
+
+.socialSection {
+    margin-top: auto;
+}
+
+.followLabel {
+    color: #fff;
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    display: block;
+}
+
+.socials {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.socials a {
+    color: var(--primary);
+    transition: color 0.3s ease;
+}
+
+.socials a:hover {
+    color: #fff;
+}
+
+/* Column Headers */
+.title {
+    color: #fff;
+    font-size: 0.85rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+    font-weight: 600;
+}
+
+/* Links */
+.links {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.links a {
+    color: #888;
+    text-decoration: none;
+    transition: color 0.2s;
+    font-size: 1rem;
+}
+
+.links a:hover {
+    color: var(--primary);
+}
+
+/* Contact Column */
+.contactItem {
+    margin-bottom: 1.5rem;
+    color: #888;
+    line-height: 1.6;
+    font-size: 1rem;
+    display: block;
+}
+
+.contactItem a {
+    color: #888;
+    text-decoration: none;
+    transition: color 0.2s;
+    display: block;
+    margin-top: 0.5rem;
+}
+
+.contactItem a:hover {
+    color: var(--primary);
+}
+
+.bottom {
+    border-top: 1px solid #1a1a1a;
+    padding-top: 2rem;
+    text-align: center;
+    color: #444;
+    font-size: 0.85rem;
+}
+
+@media (max-width: 1024px) {
+    .grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 3rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .grid {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+    }
+}
