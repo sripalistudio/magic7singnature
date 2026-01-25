@@ -81,7 +81,7 @@ export default function Contact() {
                         </div>
                         <div>
                             <span className={styles.label}>Contact Info</span>
-                            <p className={styles.value}>+91 73053 97887<br />reepthika@gmail.com</p>
+                            <p className={styles.value}>+91 73053 97887<br />magic7signaturesaloon@gmail.com</p>
                         </div>
                     </div>
 

@@ -81,13 +81,23 @@
 }
 
 .categoryTitle {
-    font-size: 1.5rem;
     margin-bottom: 2rem;
     padding-left: 1rem;
     border-left: 4px solid var(--primary);
     color: var(--foreground);
     text-transform: uppercase;
     letter-spacing: 0.1em;
+}
+
+.categorySubtitle {
+    display: block;
+    font-size: 0.9rem;
+    color: var(--muted-foreground);
+    margin-top: -1.5rem;
+    margin-bottom: 2.5rem;
+    padding-left: 1rem;
+    font-style: italic;
+    font-weight: 500;
 }
 
 .grid {

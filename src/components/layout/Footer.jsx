@@ -49,7 +49,7 @@ export default function Footer() {
                             Chennai, Tamil Nadu 600039
                         </div>
                         <div className={styles.contactItem}>
-                            <a href="mailto:reepthika@gmail.com">reepthika@gmail.com</a>
+                            <a href="mailto:magic7signaturesaloon@gmail.com">magic7signaturesaloon@gmail.com</a>
                         </div>
                         <div className={styles.contactItem}>
                             <a href="tel:+917305397887">+91 73053 97887</a>

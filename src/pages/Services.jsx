@@ -22,6 +22,15 @@ const services = [
             { name: "The Full Experience", price: "₹2500", desc: "Haircut + Beard/Shave + Facial. The ultimate treatment.", featured: true },
             { name: "Express Facial", price: "₹1500", desc: "Cleansing, exfoliation, and hot towel finish." }
         ]
+    },
+    {
+        category: "Groom Bridal Packages",
+        subtext: "Exclusive grooming & wedding-ready styling for men.",
+        items: [
+            { name: "Basic Groom Package", desc: "Skin cleanup + haircut + beard sculpt + D-Tan for a clean, polished look." },
+            { name: "Premium Groom Package", desc: "HD groom makeup + haircut & styling + beard shaping + D-Tan + fixing spray.", featured: true },
+            { name: "Signature Wedding Package", desc: "HD makeup + skin polishing + beard styling + long-lasting fixing for photoshoots.", featured: true }
+        ]
     }
 ];
 
@@ -49,7 +58,10 @@ export default function Services() {
 
             {services.map((cat, idx) => (
                 <div key={idx} className={styles.categoryBlock}>
-                    <h3 className={styles.categoryTitle}>{cat.category}</h3>
+                    <div>
+                        <h3 className={styles.categoryTitle}>{cat.category}</h3>
+                        {cat.subtext && <span className={styles.categorySubtitle}>{cat.subtext}</span>}
+                    </div>
                     <div className={styles.grid}>
                         {loading ? (
                             Array(4).fill(0).map((_, i) => (
