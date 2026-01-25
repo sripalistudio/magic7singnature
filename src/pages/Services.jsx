@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Button from '../components/ui/Button';
+import Skeleton from '../components/ui/Skeleton';
 import styles from './Services.module.css';
 
 const services = [
@@ -25,6 +26,13 @@ const services = [
 ];
 
 export default function Services() {
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const timer = setTimeout(() => setLoading(false), 800);
+        return () => clearTimeout(timer);
+    }, []);
+
     return (
         <div className={styles.container}>
             <header className={styles.header}>
@@ -43,22 +51,36 @@ export default function Services() {
                 <div key={idx} className={styles.categoryBlock}>
                     <h3 className={styles.categoryTitle}>{cat.category}</h3>
                     <div className={styles.grid}>
-                        {cat.items.map((item, i) => (
-                            <div key={i} className={`${styles.card} ${item.featured ? styles.featured : ''}`}>
-                                {item.featured && <span className={styles.featuredLabel}>Recommended</span>}
-                                <div className={styles.cardHeader}>
-                                    <h4 className={styles.serviceName}>{item.name}</h4>
-                                    <span className={styles.price}>{item.price}</span>
+                        {loading ? (
+                            Array(4).fill(0).map((_, i) => (
+                                <div key={i} className={styles.card} style={{ minHeight: '200px', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                                    <Skeleton width="60%" height="24px" />
+                                    <Skeleton width="100%" height="1px" style={{ opacity: 0.2 }} />
+                                    <Skeleton width="100%" height="16px" />
+                                    <Skeleton width="80%" height="16px" />
+                                    <div style={{ marginTop: 'auto' }}>
+                                        <Skeleton width="100%" height="40px" />
+                                    </div>
                                 </div>
-                                <div className={styles.divider}></div>
-                                <p className={styles.desc}>{item.desc}</p>
-                                <Link to="/contact" style={{ width: '100%' }}>
-                                    <Button variant={item.featured ? 'primary' : 'secondary'} fullWidth>
-                                        Visit Salon
-                                    </Button>
-                                </Link>
-                            </div>
-                        ))}
+                            ))
+                        ) : (
+                            cat.items.map((item, i) => (
+                                <div key={i} className={`${styles.card} ${item.featured ? styles.featured : ''}`}>
+                                    {item.featured && <span className={styles.featuredLabel}>Recommended</span>}
+                                    <div className={styles.cardHeader}>
+                                        <h4 className={styles.serviceName}>{item.name}</h4>
+                                        {/* <span className={styles.price}>{item.price}</span> */}
+                                    </div>
+                                    <div className={styles.divider}></div>
+                                    <p className={styles.desc}>{item.desc}</p>
+                                    <Link to="/contact" style={{ width: '100%' }}>
+                                        <Button variant={item.featured ? 'primary' : 'secondary'} fullWidth>
+                                            Visit Salon
+                                        </Button>
+                                    </Link>
+                                </div>
+                            ))
+                        )}
                     </div>
                 </div>
             ))}

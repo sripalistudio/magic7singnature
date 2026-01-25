@@ -1,9 +1,36 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Button from '../components/ui/Button';
+import Skeleton from '../components/ui/Skeleton';
 import styles from './About.module.css';
 
 export default function About() {
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const timer = setTimeout(() => setLoading(false), 800);
+        return () => clearTimeout(timer);
+    }, []);
+
+    if (loading) {
+        return (
+            <div className={styles.container}>
+                <div className={styles.hero} style={{ padding: '4rem 1rem', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem' }}>
+                    <Skeleton width="60%" height="3rem" />
+                    <Skeleton width="40%" height="1.5rem" />
+                </div>
+                <div className={styles.content} style={{ maxWidth: '800px', margin: '0 auto', padding: '2rem' }}>
+                    <Skeleton width="100%" height="20px" style={{ marginBottom: '1rem' }} />
+                    <Skeleton width="100%" height="20px" style={{ marginBottom: '1rem' }} />
+                    <Skeleton width="80%" height="20px" style={{ marginBottom: '2rem' }} />
+
+                    <Skeleton width="100%" height="20px" style={{ marginBottom: '1rem' }} />
+                    <Skeleton width="90%" height="20px" style={{ marginBottom: '1rem' }} />
+                </div>
+            </div>
+        );
+    }
+
     return (
         <div className={styles.container}>
             <header className={styles.hero}>

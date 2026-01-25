@@ -5,10 +5,10 @@ import Button from '../components/ui/Button';
 import styles from './Home.module.css';
 
 const heroImages = [
-    '/images/hero.png',
-    '/images/hero1.png',
-    '/images/hero2.png',
-    '/images/hero3.png',
+    '/images/hero.webp',
+    '/images/hero1.webp',
+    '/images/hero2.webp',
+    '/images/hero3.webp',
 ];
 
 const reviews = [
@@ -32,8 +32,13 @@ const reviews = [
     }
 ];
 
+import Skeleton from '../components/ui/Skeleton';
+
+// ... (existing imports)
+
 export default function Home() {
     const [currentImage, setCurrentImage] = useState(0);
+    const [loadedImages, setLoadedImages] = useState({});
 
     useEffect(() => {
         const timer = setInterval(() => {
@@ -42,10 +47,21 @@ export default function Home() {
         return () => clearInterval(timer);
     }, []);
 
+    const handleImageLoad = (index) => {
+        setLoadedImages((prev) => ({ ...prev, [index]: true }));
+    };
+
     return (
         <>
             <section className={styles.hero}>
                 <div className={styles.heroBackground}>
+                    {!loadedImages[currentImage] && (
+                        <Skeleton
+                            width="100%"
+                            height="100%"
+                            style={{ position: 'absolute', top: 0, left: 0, zIndex: 1 }}
+                        />
+                    )}
                     {heroImages.map((src, index) => (
                         <div
                             key={src}
@@ -54,7 +70,14 @@ export default function Home() {
                             <img
                                 src={src}
                                 alt="Salon Ambience"
-                                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                                style={{
+                                    width: '100%',
+                                    height: '100%',
+                                    objectFit: 'cover',
+                                    opacity: loadedImages[index] ? 1 : 0,
+                                    transition: 'opacity 0.5s ease-in-out'
+                                }}
+                                onLoad={() => handleImageLoad(index)}
                             />
                         </div>
                     ))}
@@ -137,7 +160,7 @@ export default function Home() {
 
                 <div className={styles.experienceImageWrapper}>
                     <img
-                        src="/images/experience_update.png"
+                        src="/images/experience_update.webp"
                         alt="Cinematic Grooming Experience"
                         className={styles.experienceImage}
                     />

@@ -124,9 +124,13 @@
 .bottom {
     border-top: 1px solid #1a1a1a;
     padding-top: 2rem;
-    text-align: center;
     color: #444;
     font-size: 0.85rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
 }
 
 @media (max-width: 1024px) {

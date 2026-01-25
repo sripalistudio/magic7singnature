@@ -3,26 +3,31 @@ import styles from './OurWork.module.css';
 
 const works = [
     {
-        src: '/images/portflio1.jpg',
+        src: '/images/portflio1.webp',
         title: 'The Royal Signature',
         desc: 'A sophisticated cut tailored for the modern Indian gentleman. Perfect balance of tradition and trend.'
     },
     {
-        src: '/images/portflio2.jpg',
+        src: '/images/portflio2.webp',
         title: 'Luxury Grooming Ritual',
         desc: 'Relaxing hot towel shave with premium essential oils. The ultimate stress-relief experience.'
     },
     {
-        src: '/images/portflio3.jpg',
+        src: '/images/portflio3.webp',
         title: 'M7 Faded Texture',
         desc: 'High-contrast skin fade with textured top. Sharp, clean, and defined for a bold look.'
     },
     {
-        src: '/images/portflio4.jpg',
+        src: '/images/portflio4.webp',
         title: 'Beard Sculpting',
         desc: 'Precision line-up and shaping to enhance facial structure. detailed beard care included.'
     }
 ];
+
+import Skeleton from '../components/ui/Skeleton';
+import { useState } from 'react';
+
+// ... (existing imports, but useState might need to be imported if not already)
 
 export default function OurWork() {
     return (
@@ -36,20 +41,36 @@ export default function OurWork() {
 
             <div className={styles.list}>
                 {works.map((work, idx) => (
-                    <div key={idx} className={styles.item} style={{ animationDelay: `${idx * 0.2}s` }}>
-                        <div className={styles.imageWrapper}>
-                            <img
-                                src={work.src}
-                                alt={work.title}
-                                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                            />
-                        </div>
-                        <div className={styles.content}>
-                            <h3 className={styles.styleName}>{work.title}</h3>
-                            <p className={styles.styleDesc}>{work.desc}</p>
-                        </div>
-                    </div>
+                    <PortfolioItem key={idx} work={work} idx={idx} />
                 ))}
+            </div>
+        </div>
+    );
+}
+
+function PortfolioItem({ work, idx }) {
+    const [loaded, setLoaded] = useState(false);
+
+    return (
+        <div className={styles.item} style={{ animationDelay: `${idx * 0.2}s` }}>
+            <div className={styles.imageWrapper}>
+                {!loaded && <Skeleton width="100%" height="100%" style={{ position: 'absolute', top: 0, left: 0 }} />}
+                <img
+                    src={work.src}
+                    alt={work.title}
+                    style={{
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'cover',
+                        opacity: loaded ? 1 : 0,
+                        transition: 'opacity 0.3s ease'
+                    }}
+                    onLoad={() => setLoaded(true)}
+                />
+            </div>
+            <div className={styles.content}>
+                <h3 className={styles.styleName}>{work.title}</h3>
+                <p className={styles.styleDesc}>{work.desc}</p>
             </div>
         </div>
     );

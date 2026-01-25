@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import Skeleton from '../components/ui/Skeleton';
 import styles from './Testimonials.module.css';
 
 const reviews = [
@@ -29,6 +30,13 @@ const reviews = [
 ];
 
 export default function Testimonials() {
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const timer = setTimeout(() => setLoading(false), 800);
+        return () => clearTimeout(timer);
+    }, []);
+
     return (
         <div className={styles.container}>
             <header className={styles.header}>
@@ -42,18 +50,33 @@ export default function Testimonials() {
             </header>
 
             <div className={styles.grid}>
-                {reviews.map((review, idx) => (
-                    <div key={idx} className={styles.card} style={{ animationDelay: `${idx * 0.1}s` }}>
-                        <p className={styles.quote}>{review.text}</p>
-                        <div className={styles.author}>
-                            <div className={styles.avatar}>{review.initial}</div>
-                            <div className={styles.info}>
-                                <span className={styles.name}>{review.name}</span>
-                                <span className={styles.role}>{review.role}</span>
+                {loading ? (
+                    Array(4).fill(0).map((_, i) => (
+                        <div key={i} className={styles.card} style={{ minHeight: '180px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                            <Skeleton width="100%" height="60px" style={{ marginBottom: '1rem' }} />
+                            <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+                                <Skeleton width="40px" height="40px" style={{ borderRadius: '50%' }} />
+                                <div style={{ flex: 1 }}>
+                                    <Skeleton width="60%" height="16px" style={{ marginBottom: '0.4rem' }} />
+                                    <Skeleton width="40%" height="12px" />
+                                </div>
                             </div>
                         </div>
-                    </div>
-                ))}
+                    ))
+                ) : (
+                    reviews.map((review, idx) => (
+                        <div key={idx} className={styles.card} style={{ animationDelay: `${idx * 0.1}s` }}>
+                            <p className={styles.quote}>{review.text}</p>
+                            <div className={styles.author}>
+                                <div className={styles.avatar}>{review.initial}</div>
+                                <div className={styles.info}>
+                                    <span className={styles.name}>{review.name}</span>
+                                    <span className={styles.role}>{review.role}</span>
+                                </div>
+                            </div>
+                        </div>
+                    ))
+                )}
             </div>
         </div>
     );

@@ -58,6 +58,9 @@ export default function Footer() {
                 </div>
                 <div className={styles.bottom}>
                     <p>&copy; {new Date().getFullYear()} MAGIC 7 Signature. All rights reserved.</p>
+                    <p style={{ opacity: 0.7 }}>
+                        Designed by <a href="https://crevasolution.in" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit', textDecoration: 'none' }}>CrevaSolution</a>
+                    </p>
                 </div>
             </div>
         </footer>

@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
+import { MapPin } from 'lucide-react';
 import Button from '../components/ui/Button';
 import styles from './Contact.module.css';
 import { supabase } from '../supabaseClient';
 
 export default function Contact() {
     const [loading, setLoading] = useState(false);
+    const [showMap, setShowMap] = useState(false);
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -63,7 +65,6 @@ export default function Contact() {
                     referrerPolicy="no-referrer-when-downgrade"
                     title="Salon Location"
                 ></iframe>
-
             </div>
 
             <div className={styles.formSection}>
