@@ -77,7 +77,12 @@ export default function Contact() {
                     <div className={styles.infoGrid}>
                         <div>
                             <span className={styles.label}>Visit Us</span>
-                            <p className={styles.value}>146, Erukkenchery High Rd,<br />Sharma Nagar, Vyasarpadi,<br />Landmark Mysore Mahal Opposite,<br />Chennai, Tamil Nadu 600039</p>
+                            <p className={styles.value}>
+                                146, Erukkenchery High Rd,<br />
+                                Sharma Nagar, Vyasarpadi,<br />
+                                Chennai, Tamil Nadu 600039
+                                <span className={styles.landmark}>Landmark: Mysore Mahal Opposite</span>
+                            </p>
                         </div>
                         <div>
                             <span className={styles.label}>Contact Info</span>

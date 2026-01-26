@@ -109,6 +109,13 @@
     display: block;
 }
 
+.landmark {
+    color: var(--primary);
+    display: block;
+    margin-top: 0.25rem;
+    font-weight: 500;
+}
+
 .contactItem a {
     color: #888;
     text-decoration: none;

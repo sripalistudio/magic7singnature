@@ -46,8 +46,8 @@ export default function Footer() {
                         <div className={styles.contactItem}>
                             146, Erukkenchery High Rd,
                             Sharma Nagar, Vyasarpadi,
-                            Landmark Mysore Mahal Opposite,
                             Chennai, Tamil Nadu 600039
+                            <span className={styles.landmark}>Landmark: Mysore Mahal Opposite</span>
                         </div>
                         <div className={styles.contactItem}>
                             <a href="mailto:magic7signaturesalon@gmail.com">magic7signaturesalon@gmail.com</a>

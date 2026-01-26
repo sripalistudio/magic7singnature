@@ -131,7 +131,7 @@ export default function Home() {
                             <p className={styles.serviceDesc}>
                                 Combine a haircut and beard trim with a relaxing facial massage.
                             </p>
-                            <Link to="/book">
+                            <Link to="/contact">
                                 <Button variant="secondary" fullWidth>Book Now</Button>
                             </Link>
                         </div>
