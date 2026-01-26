@@ -36,8 +36,8 @@ export default function Footer() {
                     <div className={styles.column}>
                         <h3 className={styles.title}>Other Shops</h3>
                         <div className={styles.links}>
-                            <a href="https://sripalibeautysaloon.in/">Sripali Beauty Saloon</a>
-                            <a href="https://sripalibridalstudio.in/">Sripali Bridal Studio</a>
+                            <a href="https://sripalibeautysaloon.in/" target="_blank" rel="noopener noreferrer">Sripali Beauty Saloon</a>
+                            <a href="https://sripalibridalstudio.in/" target="_blank" rel="noopener noreferrer">Sripali Bridal Studio</a>
                         </div>
                     </div>
 
@@ -46,6 +46,7 @@ export default function Footer() {
                         <div className={styles.contactItem}>
                             146, Erukkenchery High Rd,
                             Sharma Nagar, Vyasarpadi,
+                            Landmark Mysore Mahal Opposite,
                             Chennai, Tamil Nadu 600039
                         </div>
                         <div className={styles.contactItem}>
