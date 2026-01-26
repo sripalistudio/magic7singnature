@@ -1,0 +1,61 @@
+.loaderContainer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--background);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
+}
+
+.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.content {
+    position: relative;
+    text-align: center;
+}
+
+.text {
+    font-size: 2rem;
+    font-family: "Cinzel", serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--primary);
+    opacity: 0;
+    animation: fadeInOut 2s ease-in-out infinite;
+}
+
+.subtext {
+    margin-top: 1rem;
+    font-size: 0.875rem;
+    color: var(--muted);
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+}
+
+@keyframes fadeInOut {
+    0% {
+        opacity: 0.3;
+        transform: scale(0.98);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    100% {
+        opacity: 0.3;
+        transform: scale(0.98);
+    }
+}

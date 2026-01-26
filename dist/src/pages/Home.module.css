@@ -1,0 +1,421 @@
+.hero {
+    position: relative;
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    isolation: isolate;
+    /* Creates a new stacking context */
+}
+
+.heroBackground {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    /* Lowest layer */
+}
+
+.heroImage {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 1.5s ease-in-out;
+}
+
+.activeImage {
+    opacity: 1;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 2;
+    /* Middle layer */
+}
+
+.heroContent {
+    text-align: center;
+    max-width: 800px;
+    padding: 0 1.5rem;
+    position: relative;
+    z-index: 3;
+    /* Top layer */
+}
+
+.tagline {
+    color: var(--primary);
+    font-size: 0.875rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    display: block;
+    font-weight: 600;
+    animation: fadeUp 0.8s ease-out backwards;
+}
+
+.title {
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 2rem;
+    letter-spacing: -0.02em;
+    color: #fff;
+    animation: fadeUp 0.8s ease-out 0.2s backwards;
+}
+
+.section {
+    padding: 6rem 1.5rem;
+    background: var(--background);
+}
+
+.container {
+    max-width: var(--container-width);
+    margin: 0 auto;
+}
+
+.sectionHeader {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+.sectionTitle {
+    font-size: 2.5rem;
+    color: var(--foreground);
+    margin-bottom: 1rem;
+}
+
+.sectionDesc {
+    color: var(--muted-foreground);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.servicesGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.serviceCard {
+    background: var(--secondary);
+    border: 1px solid var(--border);
+    padding: 2rem;
+    text-align: center;
+    transition: transform 0.3s;
+}
+
+.serviceCard:hover {
+    transform: translateY(-5px);
+    border-color: var(--primary);
+}
+
+.serviceIcon {
+    color: var(--primary);
+    margin-bottom: 1.5rem;
+}
+
+.serviceTitle {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+    color: var(--foreground);
+}
+
+.serviceDesc {
+    color: var(--muted);
+    font-size: 0.9rem;
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+}
+
+/* Premium Experience Section */
+.aboutSection {
+    position: relative;
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    min-height: 80vh;
+    background-color: #0a0a0a;
+    overflow: hidden;
+    isolation: isolate;
+}
+
+/* Noise Texture */
+.aboutSection::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.03;
+    z-index: -1;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    pointer-events: none;
+}
+
+.experienceContent {
+    padding: 6rem 4rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    z-index: 2;
+}
+
+/* Ghost Text */
+.ghostText {
+    position: absolute;
+    top: 50%;
+    left: -50px;
+    transform: translateY(-50%);
+    font-size: 15rem;
+    font-weight: 900;
+    color: rgba(255, 255, 255, 0.02);
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    z-index: -1;
+    pointer-events: none;
+    letter-spacing: 2rem;
+    font-family: var(--font-sans);
+}
+
+.experienceTitle {
+    font-size: 4rem;
+    line-height: 1.1;
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    margin-bottom: 2.5rem;
+    color: #fff;
+}
+
+.experienceTitle strong {
+    font-weight: 700;
+    color: var(--primary);
+}
+
+.experienceDesc {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #a0a0a0;
+    margin-bottom: 3.5rem;
+    max-width: 500px;
+    border-left: 1px solid var(--primary);
+    padding-left: 2rem;
+}
+
+/* Image Side */
+.experienceImageWrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.experienceImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(20%) contrast(110%);
+    transition: transform 1.5s ease;
+}
+
+.experienceImageWrapper::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, #0a0a0a 0%, transparent 20%);
+    z-index: 1;
+}
+
+.aboutSection:hover .experienceImage {
+    transform: scale(1.05);
+}
+
+@media (max-width: 900px) {
+    .aboutSection {
+        grid-template-columns: 1fr;
+        padding: 4rem 1.5rem;
+    }
+
+    .experienceContent {
+        padding: 0;
+    }
+
+    .ghostText {
+        display: none;
+    }
+
+    .experienceTitle {
+        font-size: 2.5rem;
+    }
+
+    .experienceImageWrapper {
+        height: 400px;
+        margin-top: 3rem;
+    }
+
+    .experienceImageWrapper::after {
+        background: linear-gradient(180deg, #0a0a0a 0%, transparent 20%);
+    }
+}
+
+
+/* Testimonials Section */
+.testimonialsSection {
+    background-color: #0a0a0a;
+    padding: 8rem 1.5rem;
+    position: relative;
+    border-top: 1px solid #1a1a1a;
+    isolation: isolate;
+}
+
+/* Reuse noise texture logic effectively via shared utility or just duplicate for now to ensure self-containment */
+.testimonialsSection::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.03;
+    z-index: -1;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    pointer-events: none;
+}
+
+.testimonialsTitle {
+    text-align: center;
+    font-size: 3.5rem;
+    margin-bottom: 5rem;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    font-weight: 300;
+}
+
+.testimonialsTitle span {
+    color: var(--primary);
+    font-family: serif;
+    font-style: italic;
+    text-transform: none;
+    display: block;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    letter-spacing: 0.1em;
+}
+
+.testimonialsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 3rem;
+    max-width: var(--container-width);
+    margin: 0 auto;
+}
+
+.testimonialCard {
+    background: linear-gradient(145deg, rgba(22, 22, 22, 0.9), rgba(10, 10, 10, 0.95));
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 3rem;
+    position: relative;
+    transition: all 0.4s ease;
+    backdrop-filter: blur(10px);
+}
+
+.testimonialCard:hover {
+    transform: translateY(-10px);
+    border-color: var(--primary-dark);
+    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+}
+
+.quoteIcon {
+    position: absolute;
+    top: 1.5rem;
+    left: 1.5rem;
+    font-size: 5rem;
+    line-height: 1;
+    font-family: serif;
+    color: var(--primary);
+    opacity: 0.15;
+    z-index: 0;
+}
+
+.testimonialText {
+    font-size: 1.15rem;
+    line-height: 1.8;
+    color: #d1d1d1;
+    margin-bottom: 2.5rem;
+    position: relative;
+    z-index: 1;
+    font-style: italic;
+}
+
+.clientInfo {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 2rem;
+    position: relative;
+    z-index: 1;
+}
+
+.clientAvatar {
+    width: 60px;
+    height: 60px;
+    background: var(--primary-dark);
+    border: 2px solid #0a0a0a;
+    outline: 1px solid var(--primary);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-weight: 700;
+    font-size: 1.25rem;
+}
+
+.clientDetails {
+    display: flex;
+    flex-direction: column;
+}
+
+.clientName {
+    font-weight: 600;
+    color: #fff;
+    font-size: 1.1rem;
+    margin-bottom: 0.25rem;
+}
+
+.clientRole {
+    font-size: 0.85rem;
+    color: var(--primary);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

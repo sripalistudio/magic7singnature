@@ -1,0 +1,233 @@
+.container {
+    max-width: var(--container-width);
+    margin: 0 auto;
+    padding: calc(var(--header-height) + 6rem) 1.5rem 6rem;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 6rem;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.title {
+    font-size: 4.5rem;
+    color: var(--primary);
+    margin-bottom: 1.5rem;
+    font-weight: 400;
+    letter-spacing: -0.03em;
+}
+
+.subtitle {
+    font-family: 'Playfair Display', serif;
+    /* Assumed serif available or fallback */
+    font-style: italic;
+    font-size: 1.5rem;
+    color: var(--muted-foreground);
+    font-weight: 300;
+}
+
+.workGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+}
+
+.workCard {
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+    aspect-ratio: 3/4;
+
+    background: #000;
+}
+
+.imageWrapper {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.workImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    opacity: 0.9;
+}
+
+.workCard:hover .workImage {
+    transform: scale(1.05);
+    opacity: 0.6;
+}
+
+.overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent 60%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 2rem;
+}
+
+.workCard:hover .overlay {
+    opacity: 1;
+}
+
+
+
+.cardContent {
+    transform: translateY(20px);
+    transition: transform 0.4s ease;
+}
+
+.workCard:hover .cardContent {
+    transform: translateY(0);
+}
+
+.cardTitle {
+    font-size: 1.5rem;
+    color: #fff;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+.cardDesc {
+    font-size: 0.9rem;
+    color: #ccc;
+    font-weight: 300;
+}
+
+/* Lightbox Styles */
+.lightboxOverlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.95);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(10px);
+    animation: fadeIn 0.3s ease-out;
+}
+
+.lightboxContent {
+    position: relative;
+    max-width: 90vw;
+    max-height: 90vh;
+}
+
+.lightboxImage {
+    max-width: 100%;
+    max-height: 90vh;
+    object-fit: contain;
+    border-radius: 4px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s ease;
+}
+
+.closeButton {
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+    color: #fff;
+    font-size: 2rem;
+    cursor: pointer;
+    z-index: 1010;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+}
+
+.closeButton:hover {
+    opacity: 1;
+}
+
+.navButton {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    z-index: 1010;
+}
+
+.navButton:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-50%) scale(1.1);
+}
+
+.prevButton {
+    left: 2rem;
+}
+
+.nextButton {
+    right: 2rem;
+}
+
+@media (max-width: 1024px) {
+    .workGrid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .title {
+        font-size: 3.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .workGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .title {
+        font-size: 2.5rem;
+    }
+
+    .overlay {
+        opacity: 1;
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
+    }
+
+    .cardContent {
+        transform: none;
+        opacity: 1;
+    }
+
+    .navButton {
+        width: 40px;
+        height: 40px;
+    }
+
+    .prevButton {
+        left: 1rem;
+    }
+
+    .nextButton {
+        right: 1rem;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}

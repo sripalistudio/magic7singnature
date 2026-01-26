@@ -1,0 +1,24 @@
+/* Scroll Reveal Animation Classes */
+.reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s ease-out;
+}
+
+.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Razor Line Divider */
+.razorLine {
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--primary), transparent);
+    margin: 4rem 0;
+    opacity: 0.5;
+}
+
+button:hover {
+    letter-spacing: 0.1em;
+}
