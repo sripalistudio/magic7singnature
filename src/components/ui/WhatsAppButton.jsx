@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './WhatsAppButton.module.css';
 
 export default function WhatsAppButton() {
-    const phoneNumber = '917305397887'; // Without + or spaces
+    const phoneNumber = '919840614740'; // Without + or spaces
     const message = encodeURIComponent('Hi! I would like to book an appointment at MAGIC 7 Signature Salon.');
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
 

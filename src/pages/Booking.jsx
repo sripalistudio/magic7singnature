@@ -142,7 +142,7 @@ export default function Booking() {
                             className={styles.input}
                             value={formData.phone}
                             onChange={e => setFormData({ ...formData, phone: e.target.value })}
-                            placeholder="+91 98765 43210"
+                            placeholder="+91 98406 14740"
                             required
                         />
                     </div>

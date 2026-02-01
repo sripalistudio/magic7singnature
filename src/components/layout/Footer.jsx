@@ -53,7 +53,7 @@ export default function Footer() {
                             <a href="mailto:magic7signaturesalon@gmail.com">magic7signaturesalon@gmail.com</a>
                         </div>
                         <div className={styles.contactItem}>
-                            <a href="tel:+917305397887">+91 73053 97887</a>
+                            <a href="tel:+919840614740">+91 98406 14740</a>
                         </div>
                     </div>
                 </div>
