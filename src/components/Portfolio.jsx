@@ -1,0 +1,328 @@
+import React, { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { X, ChevronLeft, ChevronRight } from "lucide-react";
+
+
+
+
+const Portfolio = () => {
+  const [images, setImages] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  const [selectedId, setSelectedId] = useState(null);
+  const [zoomLevel, setZoomLevel] = useState(1);
+
+  useEffect(() => {
+    // 1. Static Initializer
+    const staticImages = [
+      { id: 1, src: '/assets/gallery1.webp', caption: 'South Indian Bridal Look', category: 'Bridal' },
+      { id: 2, src: '/assets/gallery2.webp', caption: 'Elegant Saree Draping', category: 'Draping' },
+      { id: 3, src: '/assets/gallery3.webp', caption: 'Reception Makeover', category: 'Reception' },
+      { id: 4, src: '/assets/hero.webp', caption: 'Modern Bridal Finish', category: 'Bridal' },
+      { id: 5, src: '/assets/service_makeup.webp', caption: 'HD Makeup Excellence', category: 'Makeup' },
+      { id: 6, src: '/assets/service_hair.webp', caption: 'Intricate Hair styling', category: 'Hair' },
+      { id: 7, src: '/assets/service_saree.webp', caption: 'Perfect Saree Silhouettes', category: 'Draping' },
+      { id: 8, src: '/assets/gallery8.webp', caption: 'Flawless Bridal Makeup', category: 'Bridal', position: 'top' },
+      { id: 9, src: '/assets/gallery9.webp', caption: 'Classic Wedding Style', category: 'Bridal', position: 'top' },
+      { id: 10, src: '/assets/gallery10.webp', caption: 'Beautiful Event Looks', category: 'Makeup', position: 'top' },
+      { id: 11, src: '/assets/gallery11.webp', caption: 'Meticulous Hair Art', category: 'Hair', position: 'top' },
+      { id: 12, src: '/assets/gallery12.webp', caption: 'Cultural Elegance', category: 'Bridal', position: 'top' },
+      { id: 13, src: '/assets/gallery13.webp', caption: 'Glowing Bride', category: 'Makeup', position: 'top' }
+    ];
+    setImages(staticImages);
+    setLoading(false);
+  }, []);
+
+  // ================= LIGHTBOX ==================
+  const openLightbox = (index) => {
+    setSelectedId(index);
+    setZoomLevel(1);
+    document.body.style.overflow = "hidden";
+  };
+
+  const closeLightbox = () => {
+    setSelectedId(null);
+    setZoomLevel(1);
+    document.body.style.overflow = "auto";
+  };
+
+  const nextImage = () => {
+    setSelectedId((prev) => (prev + 1) % images.length);
+    setZoomLevel(1);
+  };
+
+  const prevImage = () => {
+    setSelectedId((prev) => (prev - 1 + images.length) % images.length);
+    setZoomLevel(1);
+  };
+
+  const toggleZoom = (e) => {
+    e.stopPropagation();
+    setZoomLevel((prev) => (prev === 1 ? 2 : 1));
+  };
+
+  // Keyboard
+  useEffect(() => {
+    const handleKey = (e) => {
+      if (selectedId === null) return;
+
+      if (e.key === "Escape") closeLightbox();
+      if (e.key === "ArrowRight") nextImage();
+      if (e.key === "ArrowLeft") prevImage();
+    };
+
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  }, [selectedId, images]);
+
+  const selectedImage = selectedId !== null ? images[selectedId] : null;
+
+  // ================= UI ==================
+  return (
+    <section className="section-padding" style={{ background: "#050505" }}>
+      <div className="container">
+        {/* Header */}
+        <div style={{ textAlign: "center", marginBottom: "4rem" }}>
+          <h2 style={{ fontSize: "2.5rem", color: "#fff" }}>Our Portfolio</h2>
+
+          <p
+            style={{
+              color: "var(--color-text-secondary)",
+              fontSize: "1.2rem",
+              fontFamily: "var(--font-serif)",
+              fontStyle: "italic",
+            }}
+          >
+            Moments of grace, captured in time.
+          </p>
+        </div>
+
+        {/* Skeleton Loading */}
+        {loading && (
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
+              gap: "1.5rem",
+            }}
+          >
+            {[1, 2, 3, 4, 5, 6].map((i) => (
+              <div
+                key={i}
+                style={{
+                  aspectRatio: "4/3",
+                  background: "var(--color-bg-soft)",
+                  borderRadius: "8px",
+                  overflow: "hidden",
+                  position: "relative",
+                  animation: "pulse 1.5s infinite"
+                }}
+              >
+                <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "30%", background: "linear-gradient(to top, rgba(255,255,255,0.05), transparent)" }}></div>
+              </div>
+            ))}
+            <style>{`
+                @keyframes pulse {
+                  0% { opacity: 0.6; }
+                  50% { opacity: 1; }
+                  100% { opacity: 0.6; }
+                }
+              `}</style>
+          </div>
+        )}
+
+        {/* Empty */}
+        {!loading && images.length === 0 && (
+          <p style={{ textAlign: "center", color: "#aaa" }}>No images found.</p>
+        )}
+
+        {/* Grid */}
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
+            gap: "1.5rem",
+          }}
+        >
+          {images.map((img, index) => (
+            <motion.div
+              key={img.id}
+              layoutId={`img-${index}`}
+              whileHover={{
+                scale: 1.02,
+                y: -5,
+                boxShadow: "0 10px 30px rgba(0,0,0,0.5)",
+              }}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: index * 0.1 }}
+              onClick={() => openLightbox(index)}
+              style={{
+                aspectRatio: "4/3",
+                overflow: "hidden",
+                borderRadius: "8px",
+                cursor: "pointer",
+                position: "relative",
+              }}
+            >
+              <img
+                src={img.src}
+                alt={img.caption}
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
+                  objectPosition: img.position || "center",
+                }}
+              />
+
+              {/* Hover Text */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                whileHover={{ opacity: 1 }}
+                style={{
+                  position: "absolute",
+                  inset: 0,
+                  background:
+                    "linear-gradient(to top, rgba(0,0,0,0.8), transparent)",
+                  display: "flex",
+                  alignItems: "flex-end",
+                  padding: "1.5rem",
+                }}
+              >
+                <p style={{ color: "#fff", fontWeight: 500 }}>{img.category}</p>
+              </motion.div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+
+      {/* ================= LIGHTBOX ================= */}
+      <AnimatePresence>
+        {selectedId !== null && selectedImage && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={closeLightbox}
+            style={{
+              position: "fixed",
+              inset: 0,
+              background: "rgba(0,0,0,0.95)",
+              zIndex: 1000,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            {/* Close */}
+            <button
+              onClick={closeLightbox}
+              style={{
+                position: "absolute",
+                top: "2rem",
+                right: "2rem",
+                color: "#fff",
+                background: "transparent",
+              }}
+            >
+              <X size={32} />
+            </button>
+
+            {/* Prev */}
+            <button
+              onClick={(e) => { e.stopPropagation(); prevImage(); }}
+              className="lightbox-nav-btn prev"
+              style={{
+                position: "absolute",
+                left: "2rem",
+                color: "#fff",
+                background: "rgba(255,255,255,0.1)",
+                borderRadius: "50%",
+                padding: "1rem",
+                zIndex: 1010,
+              }}
+            >
+              <ChevronLeft size={24} />
+            </button>
+
+            {/* Next */}
+            <button
+              onClick={(e) => { e.stopPropagation(); nextImage(); }}
+              className="lightbox-nav-btn next"
+              style={{
+                position: "absolute",
+                right: "2rem",
+                color: "#fff",
+                background: "rgba(255,255,255,0.1)",
+                borderRadius: "50%",
+                padding: "1rem",
+                zIndex: 1010,
+              }}
+            >
+              <ChevronRight size={24} />
+            </button>
+
+            <style>{`
+              @media (max-width: 768px) {
+                .lightbox-nav-btn {
+                  padding: 0.8rem !important;
+                  bottom: 2rem;
+                  top: auto;
+                }
+                .lightbox-nav-btn.prev {
+                  left: 20% !important;
+                }
+                .lightbox-nav-btn.next {
+                  right: 20% !important;
+                  left: auto !important;
+                }
+              }
+            `}</style>
+
+            {/* Image */}
+            <motion.div
+              layoutId={`img-${selectedId}`}
+              onClick={(e) => e.stopPropagation()}
+              style={{
+                maxWidth: "90%",
+                maxHeight: "85%",
+              }}
+            >
+              <motion.img
+                src={selectedImage.src}
+                alt={selectedImage.caption}
+                animate={{ scale: zoomLevel }}
+                onClick={toggleZoom}
+                style={{
+                  maxWidth: "100%",
+                  maxHeight: "80vh",
+                  borderRadius: "4px",
+                  cursor: zoomLevel > 1 ? "grab" : "zoom-in",
+                }}
+              />
+
+              {/* Caption */}
+              <div
+                style={{
+                  textAlign: "center",
+                  marginTop: "1rem",
+                  color: "#fff",
+                }}
+              >
+                <h3 style={{ color: "var(--color-gold)" }}>
+                  {selectedImage.category}
+                </h3>
+
+                <p style={{ color: "#ccc" }}>{selectedImage.caption}</p>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </section>
+  );
+};
+
+export default Portfolio;

@@ -1,83 +1,93 @@
-import React, { useState, useEffect } from 'react';
-import Skeleton from '../components/ui/Skeleton';
-import styles from './Testimonials.module.css';
+import React from 'react';
+import { motion } from 'framer-motion';
+import { Quote, Star } from 'lucide-react';
+import SEO from '../components/SEO';
 
-const reviews = [
+const testimonials = [
     {
-        name: "Karthikeyan",
-        role: "Regular Client",
-        text: "The service at MAGIC 7 Signature is simply unmatched. The attention to detail and atmosphere make it the only place I trust with my grooming.",
-        initial: "K"
+        name: "Shravani Suresh",
+        event: "Wedding Day",
+        quote: "Amazing bridal experience! The team was patient, professional, and nailed every detail — I felt beautiful and confident on my big day.",
+        rating: 5
     },
     {
-        name: "Vijay Kumar",
-        role: "Business Owner",
-        text: "A sharp look is essential for my line of work. These guys know exactly how to deliver a classic, timeless cut. Highly recommended.",
-        initial: "VK"
+        name: "Rekha Franco",
+        event: "Reception Look",
+        quote: "Huge thanks to Lalitha and team! The makeup was natural, beautiful, and perfectly done on time. They were patient, friendly, and made us feel so comfortable. Loved it!",
+        rating: 5
     },
     {
-        name: "Surya Narayanan",
-        role: "Attorney",
-        text: "I don't have time for mediocrity. MAGIC 7 Signature respects my schedule and delivers perfection every single time.",
-        initial: "SN"
+        name: "Maha Kannan",
+        event: "Engagement",
+        quote: "Amazing experience with Mrs. Lalitha! Flawless, long-lasting makeup, clean setup, and super comfortable service. Will book again for sure!",
+        rating: 5
     },
     {
-        name: "Vikram",
-        role: "Philanthropist",
-        text: "Excellent discretion and privacy. The VIP service is exactly what I need on a busy day.",
-        initial: "V"
+        name: "Meera S.",
+        event: "Birthday",
+        quote: "Had a great experience at Sripali Beauty Salon. I went with my daughter for a haircut and we are both very happy and satisfied with the service.",
+        rating: 5
+    },
+    {
+        name: "Priya K.",
+        event: "Muhurtham",
+        quote: "Traditional makeup done right. Classic, elegant, and timeless. Sripali is a true artist.",
+        rating: 5
+    },
+    {
+        name: "Divya T.",
+        event: "Cocktail Party",
+        quote: "Absolutely loved the glam look! It stayed put through hours of dancing.",
+        rating: 5
     }
 ];
 
-export default function Testimonials() {
-    const [loading, setLoading] = useState(true);
-
-    useEffect(() => {
-        const timer = setTimeout(() => setLoading(false), 800);
-        return () => clearTimeout(timer);
-    }, []);
-
+const Testimonials = () => {
     return (
-        <div className={styles.container}>
-            <header className={styles.header}>
-                <h1 className={styles.title}>
-                    <span>Client Stories</span>
-                    Words of <strong>Distinction</strong>
-                </h1>
-                <p className={styles.intro}>
-                    Don't just take our word for it. Here is what the gentlemen of the city have to say about their experience at MAGIC 7 Signature.
-                </p>
-            </header>
-
-            <div className={styles.grid}>
-                {loading ? (
-                    Array(4).fill(0).map((_, i) => (
-                        <div key={i} className={styles.card} style={{ minHeight: '180px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-                            <Skeleton width="100%" height="60px" style={{ marginBottom: '1rem' }} />
-                            <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
-                                <Skeleton width="40px" height="40px" style={{ borderRadius: '50%' }} />
-                                <div style={{ flex: 1 }}>
-                                    <Skeleton width="60%" height="16px" style={{ marginBottom: '0.4rem' }} />
-                                    <Skeleton width="40%" height="12px" />
-                                </div>
-                            </div>
-                        </div>
-                    ))
-                ) : (
-                    reviews.map((review, idx) => (
-                        <div key={idx} className={styles.card} style={{ animationDelay: `${idx * 0.1}s` }}>
-                            <p className={styles.quote}>{review.text}</p>
-                            <div className={styles.author}>
-                                <div className={styles.avatar}>{review.initial}</div>
-                                <div className={styles.info}>
-                                    <span className={styles.name}>{review.name}</span>
-                                    <span className={styles.role}>{review.role}</span>
-                                </div>
-                            </div>
-                        </div>
-                    ))
-                )}
+        <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="container section-padding"
+            style={{ paddingTop: '150px' }}
+        >
+            <SEO
+                description="Read what our happy brides have to say about their experience with Sripali Beauty Salon."
+            />
+            <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
+                <h1 style={{ fontSize: '3rem', marginBottom: '1rem', color: '#fff', fontFamily: 'var(--font-serif)' }}>Kind Words</h1>
+                <p style={{ color: 'var(--color-text-secondary)', fontSize: '1.2rem' }}>Love notes from our beautiful brides.</p>
             </div>
-        </div>
+
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem' }}>
+                {testimonials.map((t, index) => (
+                    <motion.div
+                        key={index}
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: index * 0.1 }}
+                        whileHover={{ y: -5 }}
+                        style={{ background: '#111111', padding: '2.5rem', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.05)' }}
+                    >
+                        <Quote size={32} color="var(--color-gold)" style={{ marginBottom: '1.5rem', opacity: 0.8 }} />
+                        <p style={{ color: 'var(--color-text-secondary)', fontStyle: 'italic', fontSize: '1.05rem', lineHeight: '1.6', marginBottom: '2rem' }}>
+                            "{t.quote}"
+                        </p>
+                        <div>
+                            <h4 style={{ color: '#fff', fontSize: '1.1rem', marginBottom: '0.2rem' }}>{t.name}</h4>
+                            <div style={{ color: 'var(--color-text-muted)', fontSize: '0.9rem', marginBottom: '0.5rem' }}>{t.event}</div>
+                            <div style={{ display: 'flex', gap: '0.2rem' }}>
+                                {[...Array(t.rating)].map((_, i) => (
+                                    <Star key={i} size={16} fill="var(--color-gold)" color="var(--color-gold)" />
+                                ))}
+                            </div>
+                        </div>
+                    </motion.div>
+                ))}
+            </div>
+        </motion.div>
     );
-}
+};
+
+export default Testimonials;

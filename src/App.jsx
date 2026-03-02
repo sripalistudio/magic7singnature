@@ -1,104 +1,92 @@
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import Header from './components/layout/Header';
-import Footer from './components/layout/Footer';
-import Loader from './components/ui/Loader';
-import WhatsAppButton from './components/ui/WhatsAppButton';
-import Home from './pages/Home';
-import Services from './pages/Services';
-import OurWork from './pages/OurWork';
-import Testimonials from './pages/Testimonials';
-import Contact from './pages/Contact';
-import About from './pages/About';
-import NotFound from './pages/NotFound';
-import AdminLogin from './pages/AdminLogin';
-import AdminDashboard from './pages/AdminDashboard';
-import './index.css';
+import React, { useState, Suspense } from "react";
+import { Routes, Route, useLocation } from "react-router-dom";
+import { AnimatePresence } from "framer-motion";
 
-function ScrollToTop() {
-    const { pathname } = useLocation();
-    useEffect(() => {
-        window.scrollTo(0, 0);
-    }, [pathname]);
-    return null;
-}
+
+
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
+import Loader from "./components/Loader";
+import Chatbot from "./components/Chatbot";
+import ScrollToTop from "./components/ScrollToTop";
+
+// Lazy Load Pages
+const Home = React.lazy(() => import("./pages/Home"));
+const Gallery = React.lazy(() => import("./pages/Gallery"));
+const Packages = React.lazy(() => import("./pages/Packages"));
+const Founder = React.lazy(() => import("./pages/Founder"));
+const Testimonials = React.lazy(() => import("./pages/Testimonials"));
+const FAQ = React.lazy(() => import("./pages/FAQ"));
+const Contact = React.lazy(() => import("./pages/Contact"));
+const Booking = React.lazy(() => import("./pages/Booking"));
+const BridalStudioVyasarpadi = React.lazy(() => import("./pages/BridalStudioVyasarpadi"));
+
+
 
 function App() {
-    const [loading, setLoading] = useState(true);
-    const [fadeOut, setFadeOut] = useState(false);
-    const [isFirstVisit, setIsFirstVisit] = useState(true);
+  const [loading, setLoading] = useState(true);
+  const location = useLocation();
 
-    useEffect(() => {
-        // Check if this is a reload
-        const navEntry = performance.getEntriesByType("navigation")[0];
-        if (navEntry && navEntry.type === 'reload') {
-            sessionStorage.removeItem('visited');
-        }
 
-        // Check if this is a fresh visit or reload
-        const hasVisited = sessionStorage.getItem('visited');
 
-        // If user wants it on refresh, we can check performance navigation or just rely on state reset?
-        // But state resets every time. sessionStorage persists.
-        // To satisfy "Show on refresh" AND "Use sessionStorage":
-        // We can explicitly clear the session storage if we detect a reload, OR
-        // we can just treat the local state init as the separate "session" (tab life).
-        // However, standard "first visit" logic usually relies on sessionStorage to avoid showing it 
-        // if the user navigates back to root or reloads.
-        // Given the specific request:
-        // 1. Show first time in tab. (sessionStorage empty)
-        // 3. Show on refresh. (sessionStorage persists - so this conflicts unless we clear it).
+  // Fix: Disable browser's automatic scroll restoration
+  React.useEffect(() => {
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual';
+    }
+    window.scrollTo(0, 0);
+  }, []);
 
-        // Strategy: Clear sessionStorage on mount if it's a reload? 
-        // Or simpler: The user might just mean "Session" as in "This specific page view flow".
-        // But they asked for sessionStorage.
+  // Scroll to top when loading finishes
+  React.useEffect(() => {
+    if (!loading) {
+      window.scrollTo(0, 0);
+    }
+  }, [loading]);
 
-        // Let's implement the standard check.
-        if (!hasVisited) {
-            // Start Loading
-            const timer = setTimeout(() => {
-                setFadeOut(true);
-                setTimeout(() => {
-                    setLoading(false);
-                    sessionStorage.setItem('visited', 'true');
-                }, 500); // Wait for transition
-            }, 2000); // 2 seconds loading time
-            return () => clearTimeout(timer);
-        } else {
-            setLoading(false);
-            setFadeOut(true);
-        }
-    }, []);
+  return (
+    <>
+      <Loader onLoadingComplete={() => setLoading(false)} />
+      <ScrollToTop />
 
-    // If strictly loading (not fading out), don't render app yet if we want to "hide" it entirely?
-    // Or render behind? "Show main app without showing loader".
+      {!loading && (
+        <div className="app-container">
+          <Navbar />
 
-    return (
-        <div style={{ position: 'relative' }}>
-            {loading && <Loader fadeOut={fadeOut} />}
+          {/* Main Content */}
+          <main style={{ minHeight: "100vh", position: "relative" }}>
+            <Suspense fallback={<Loader />}>
+              <AnimatePresence mode="wait">
+                <Routes location={location} key={location.pathname}>
+                  {/* ================= PUBLIC ROUTES ================= */}
+                  <Route path="/" element={<Home />} />
+                  <Route path="/gallery" element={<Gallery />} />
+                  <Route path="/packages" element={<Packages />} />
+                  <Route path="/founder" element={<Founder />} />
+                  <Route path="/testimonials" element={<Testimonials />} />
+                  <Route path="/faq" element={<FAQ />} />
+                  <Route path="/contact" element={<Contact />} />
+                  <Route path="/booking" element={<Booking />} />
 
-            {/* Main App Content - Visible after loading starts fading or if not loading */}
-            {(!loading || fadeOut) && (
-                <Router>
-                    <ScrollToTop />
-                    <Header />
-                    <Routes>
-                        <Route path="/" element={<Home />} />
-                        <Route path="/services" element={<Services />} />
-                        <Route path="/our-work" element={<OurWork />} />
-                        <Route path="/testimonials" element={<Testimonials />} />
-                        <Route path="/contact" element={<Contact />} />
-                        <Route path="/about" element={<About />} />
-                        <Route path="/admin" element={<AdminLogin />} />
-                        <Route path="/admin/dashboard" element={<AdminDashboard />} />
-                        <Route path="*" element={<NotFound />} />
-                    </Routes>
-                    <WhatsAppButton />
-                    <Footer />
-                </Router>
-            )}
-        </div>
-    );
+                  <Route
+                    path="/bridal-studio-vyasarpadi"
+                    element={<BridalStudioVyasarpadi />}
+                  />
+
+
+
+                </Routes>
+              </AnimatePresence>
+            </Suspense>
+          </main>
+
+          <Footer />
+          <Chatbot />
+        </div >
+      )
+      }
+    </>
+  );
 }
 
 export default App;
